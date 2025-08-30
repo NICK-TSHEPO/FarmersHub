@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FarmersHub - Products Marketplace</title>
+  <style>
+    /* General body styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffe6f0;
+      color: #330033;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Container layout */
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar styling */
+    .sidebar {
+      background-color: #ff99cc;
+      padding: 20px;
+      width: 200px;
+    }
+
+    .sidebar h3 {
+      color: #ffffff;
+      margin-bottom: 15px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      padding: 10px 0;
+      color: #330033;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .sidebar ul li:hover {
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    /* Main content styling */
+    .main-content {
+      flex: 1;
+      padding: 20px;
+    }
+
+    .main-content h2 {
+      color: #b30059;
+      margin-bottom: 20px;
+    }
+
+    /* Table styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table td {
+      text-align: center;
+      padding: 15px;
+      border: 2px solid #ff99cc;
+      background-color: #ffe6f0;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    table td:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      background-color: #ffcce6;
+    }
+
+    table img {
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h3>Categories</h3>
+      <ul>
+        <li>Seeds</li>
+        <li>Fertilizers</li>
+        <li>Machinery</li>
+        <li>Tools</li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <h2>Products Marketplace</h2>
+      <table>
+        <tr>
+          <td>
+            <img src="https://via.placeholder.com/100" alt="Maize Seeds"><br>
+            Maize Seeds - R280
+          </td>
+          <td>
+            <img src="https://via.placeholder.com/100" alt="Wheat Seeds"><br>
+            Wheat Seeds - R220
+          </td>
+          <td>
+            <img src="https://via.placeholder.com/100" alt="Rice Seeds"><br>
+            Rice Seeds - R330
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img src="https://via.placeholder.com/100" alt="Organic Fertilizer"><br>
+            Organic Fertilizer - R450
+          </td>
+          <td>
+            <img src="https://via.placeholder.com/100" alt="NPK Fertilizer"><br>
+            NPK Fertilizer - R550
+          </td>
+          <td>
+            <img src="https://via.placeholder.com/100" alt="Compost Fertilizer"><br>
+            Compost Fertilizer - R380
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img src="https://via.placeholder.com/100" alt="Tractor"><br>
+            Tractor - R28,000
+          </td>
+          <td>
+            <img src="https://via.placeholder.com/100" alt="Plough Machine"><br>
+            Plough Machine - R13,000
+          </td>
+          <td>
+            <img src="https://via.placeholder.com/100" alt="Hand Tools Set"><br>
+            Hand Tools Set - R950
+          </td>
+        </tr>
+      </table>
+    </main>
+  </div>
+
+</body>
+</html>
