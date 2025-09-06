@@ -6,6 +6,8 @@ import "./App.css";
 import Home from "./components/pageComponents/home-page";
 import Header from './components/sectionComponents/header';
 import Footer from './components/sectionComponents/footer';
+import LivestockHealthTips from './components/sectionComponents/LivestockHealthTips';
+
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
           <div className="body">
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/LivestockHealthTips" element={<LivestockHealthTips />} />
               </Routes>
           </div>
 
