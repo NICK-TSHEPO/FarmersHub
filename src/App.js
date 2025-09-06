@@ -4,7 +4,7 @@ import "./App.css";
 
 // Importing your components
 import Home from "./components/pageComponents/home-page";
-import Services from "./components/pageComponents/Services";
+import Products from "./components/pageComponents/products-marketplace";
 import Header from './components/sectionComponents/header';
 import Footer from './components/sectionComponents/footer';
 
@@ -20,7 +20,7 @@ function App() {
           <div className="body">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/services" element={<Services />} />
+                <Route path="/products" element={<Products />} />
               </Routes>
           </div>
 
