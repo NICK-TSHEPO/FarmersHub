@@ -6,8 +6,10 @@ import "./App.css";
 import Home from "./components/pageComponents/home-page";
 import Header from './components/sectionComponents/header';
 import Footer from './components/sectionComponents/footer';
-import LivestockHealthTips from './components/sectionComponents/LivestockHealthTips';
-
+import ServicesPage from './components/pageComponents/services';
+import ProductsPage from './components/pageComponents/products';
+import SeasonalPage from './components/pageComponents/seasonal-crop';
+import LivestockPage from './components/pageComponents/livestock-tips';
 
 function App() {
   return (
@@ -21,7 +23,10 @@ function App() {
           <div className="body">
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/LivestockHealthTips" element={<LivestockHealthTips />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/products" element={<ProductsPage />} />
+                <Route path="/season" element={<SeasonalPage />} />
+                <Route path="/livestock" element={<LivestockPage />} />
               </Routes>
           </div>
 
