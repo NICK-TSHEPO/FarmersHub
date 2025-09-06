@@ -6,10 +6,10 @@ import "./App.css";
 import Home from "./components/pageComponents/home-page";
 import Header from './components/sectionComponents/header';
 import Footer from './components/sectionComponents/footer';
-import ServicesPage from './components/pageComponents/services';
-import ProductsPage from './components/pageComponents/products';
-import SeasonalPage from './components/pageComponents/seasonal-crop';
-import LivestockPage from './components/pageComponents/livestock-tips';
+import ServicesPage from './components/pageComponents/services.js';
+import ProductsPage from './components/pageComponents/products.js';
+import SeasonalPage from './components/pageComponents/seasonal-crop.js';
+import LivestockPage from './components/pageComponents/livestock-tips.js';
 
 function App() {
   return (
