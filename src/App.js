@@ -3,11 +3,11 @@ import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 
 // Importing your components
-import Home from "./components/pageComponents/home-page1";
-import Seasons from "./components/pageComponents/seasonal-crop.js";
+import Home from "./components/pageComponents/home-page";
 import Header from './components/sectionComponents/header';
-
 import Footer from './components/sectionComponents/footer';
+import LivestockHealthTips from './components/sectionComponents/LivestockHealthTips';
+
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
           <div className="body">
               <Routes>
                 <Route path="/" element={<Home />} />
-				<Route path="/seasons" element={<Seasons/>} />
+                <Route path="/LivestockHealthTips" element={<LivestockHealthTips />} />
               </Routes>
           </div>
 
