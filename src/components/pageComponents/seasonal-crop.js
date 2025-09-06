@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const FarmersHub = () => {
+  const [activeTab, setActiveTab] = useState('summer');
+
+  const handleTabClick = (season) => {
+    setActiveTab(season);
+  };
+
   return (
     <div>
+      {/* Embedded styling */}
       <style>
         {`
           :root {
@@ -134,18 +141,69 @@ const FarmersHub = () => {
       </header>
 
       <div className="tabs">
-        <div className="tab active"><i className="fas fa-sun"></i> Summer</div>
-        <div className="tab"><i className="fas fa-leaf"></i> Autumn</div>
-        <div className="tab"><i className="fas fa-snowflake"></i> Winter</div>
-        <div className="tab"><i className="fas fa-cloud-sun"></i> Spring</div>
+        <div
+          className={`tab ${activeTab === 'summer' ? 'active' : ''}`}
+          onClick={() => handleTabClick('summer')}
+        >
+          <i className="fas fa-sun"></i> Summer
+        </div>
+        <div
+          className={`tab ${activeTab === 'autumn' ? 'active' : ''}`}
+          onClick={() => handleTabClick('autumn')}
+        >
+          <i className="fas fa-leaf"></i> Autumn
+        </div>
+        <div
+          className={`tab ${activeTab === 'winter' ? 'active' : ''}`}
+          onClick={() => handleTabClick('winter')}
+        >
+          <i className="fas fa-snowflake"></i> Winter
+        </div>
+        <div
+          className={`tab ${activeTab === 'spring' ? 'active' : ''}`}
+          onClick={() => handleTabClick('spring')}
+        >
+          <i className="fas fa-cloud-sun"></i> Spring
+        </div>
       </div>
 
-      <div id="summer" className="tab-content active">
+      {/* Content Sections */}
+      <div className={`tab-content ${activeTab === 'summer' ? 'active' : ''}`}>
         <h3><i className="fas fa-sun"></i> Summer (Dec–Feb)</h3>
         <div className="section">
           <h4>Best Crops to Plant</h4>
           <ul>
             <li>Maize, sorghum, soybeans, sunflower</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className={`tab-content ${activeTab === 'autumn' ? 'active' : ''}`}>
+        <h3><i className="fas fa-leaf"></i> Autumn (Mar–May)</h3>
+        <div className="section">
+          <h4>Best Crops to Plant</h4>
+          <ul>
+            <li>Dry beans, broccoli, spinach, cabbage</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className={`tab-content ${activeTab === 'winter' ? 'active' : ''}`}>
+        <h3><i className="fas fa-snowflake"></i> Winter (Jun–Aug)</h3>
+        <div className="section">
+          <h4>Best Crops to Plant</h4>
+          <ul>
+            <li>Carrots, onions, garlic, kale</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className={`tab-content ${activeTab === 'spring' ? 'active' : ''}`}>
+        <h3><i className="fas fa-cloud-sun"></i> Spring (Sep–Nov)</h3>
+        <div className="section">
+          <h4>Best Crops to Plant</h4>
+          <ul>
+            <li>Tomatoes, peppers, cucumbers, pumpkins</li>
           </ul>
         </div>
       </div>
