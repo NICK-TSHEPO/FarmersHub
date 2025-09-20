@@ -118,7 +118,7 @@ export default function FarmingServices() {
           font-family: 'Nunito', sans-serif;
           background: linear-gradient(-45deg, #FAFAF0, #dfffe0, #fff8d6, #f0fdf4);
           background-size: 400% 400%;
-          animation: gradientShift 12s ease infinite;
+          animation: gradientShift 15s ease infinite;
           color: #333;
         }
 
@@ -130,35 +130,35 @@ export default function FarmingServices() {
           overflow: hidden;
         }
 
-        /* Animated gradient background */
+        /* Animated gradient */
         @keyframes gradientShift {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
         }
 
-        /* Decorative blobs */
+        /* Decorative floating blobs */
         .app::before, .app::after {
           content: "";
           position: absolute;
           border-radius: 50%;
-          filter: blur(80px);
-          opacity: 0.5;
+          filter: blur(100px);
+          opacity: 0.4;
           z-index: 0;
         }
         .app::before {
-          width: 350px;
-          height: 350px;
+          width: 400px;
+          height: 400px;
           background: #4CAF50;
-          top: -100px;
-          left: -100px;
+          top: -120px;
+          left: -120px;
           animation: float 8s ease-in-out infinite alternate;
         }
         .app::after {
-          width: 300px;
-          height: 300px;
+          width: 350px;
+          height: 350px;
           background: #F2C94C;
-          bottom: -120px;
+          bottom: -100px;
           right: -100px;
           animation: float 10s ease-in-out infinite alternate-reverse;
         }
@@ -171,7 +171,7 @@ export default function FarmingServices() {
         .main {
           display: flex;
           flex: 1;
-          padding: 2rem;
+          padding: 3rem;
           gap: 2rem;
           z-index: 1;
           position: relative;
@@ -189,64 +189,65 @@ export default function FarmingServices() {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          background: rgba(255, 255, 255, 0.75);
+          background: rgba(255, 255, 255, 0.85);
           border: 2px solid #8B5E3C;
-          padding: 1rem;
-          border-radius: 14px;
+          padding: 1.2rem;
+          border-radius: 18px;
           font-weight: 600;
           cursor: pointer;
-          transition: all 0.3s ease;
-          font-size: 1rem;
-          backdrop-filter: blur(6px);
+          transition: all 0.35s ease;
+          font-size: 1.05rem;
+          backdrop-filter: blur(10px);
+          box-shadow: 0 6px 15px rgba(0,0,0,0.1);
         }
 
         .service-btn:hover {
           background: #F2C94C;
-          transform: translateY(-3px) scale(1.02);
-          box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+          transform: translateY(-4px) scale(1.03);
+          box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
 
         .service-btn.active {
           background: linear-gradient(135deg, #4CAF50, #45a049);
           color: white;
           border-color: #4CAF50;
-          box-shadow: 0 8px 16px rgba(76, 175, 80, 0.3);
+          box-shadow: 0 12px 25px rgba(76, 175, 80, 0.3);
         }
 
         .icon {
-          font-size: 1.3rem;
+          font-size: 1.4rem;
         }
 
         /* Content */
         .content {
           flex: 3;
-          background: rgba(255, 255, 255, 0.9);
-          border-radius: 20px;
-          padding: 2.5rem;
-          box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+          background: rgba(255, 255, 255, 0.95);
+          border-radius: 24px;
+          padding: 3rem;
+          box-shadow: 0 12px 30px rgba(0,0,0,0.15);
           animation: fadeIn 0.4s ease;
-          backdrop-filter: blur(8px);
+          backdrop-filter: blur(12px);
         }
 
         .content h2 {
           font-family: 'Montserrat', sans-serif;
           color: #4CAF50;
-          margin-bottom: 1rem;
-          font-size: 1.8rem;
+          margin-bottom: 1.25rem;
+          font-size: 2rem;
         }
 
         .content ul {
-          margin: 0.75rem 0 1.25rem;
+          margin: 1rem 0 1.5rem;
           padding-left: 1.5rem;
         }
 
         .content li {
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.65rem;
         }
 
         /* Animation */
         @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
+          from { opacity: 0; transform: translateY(15px); }
           to { opacity: 1; transform: translateY(0); }
         }
 
@@ -268,7 +269,7 @@ export default function FarmingServices() {
 
         @media (max-width: 600px) {
           .content {
-            padding: 1.5rem;
+            padding: 2rem;
           }
         }
       `}</style>
