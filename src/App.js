@@ -10,6 +10,7 @@ import ServicesPage from './components/pageComponents/services.js';
 import ProductsPage from './components/pageComponents/products.js';
 import SeasonalPage from './components/pageComponents/seasonal-crop.js';
 import LivestockPage from './components/pageComponents/livestock-tips.js';
+import WeatherPage from './components/pageComponents/weather-page.js';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
                 <Route path="/products" element={<ProductsPage />} />
                 <Route path="/season" element={<SeasonalPage />} />
                 <Route path="/livestock" element={<LivestockPage />} />
+				<Route path="/weather" element={<WeatherPage />} />
               </Routes>
           </div>
 
