@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./shared.css";
+import "./livestock-tips.css";
 
 const seasonalData = {
   summer: {
