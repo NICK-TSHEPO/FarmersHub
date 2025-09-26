@@ -1,28 +1,29 @@
 import React, { useState } from "react";
-import "./styles.css";
+import "./shared.css"; // ✅ external stylesheet
 
 const services = [
   {
     name: "Equipment Rentals",
+    icon: "🚜",
     content: (
       <>
         <h2>Equipment Rentals</h2>
         <p>
-          Find and rent the latest farming equipment from trusted providers. We offer:
+          Find and rent the latest farming equipment from trusted providers. We
+          offer:
         </p>
         <ul>
           <li>Tractors, ploughs, and harvesters</li>
           <li>Irrigation systems</li>
           <li>Specialized machinery for all crop types</li>
         </ul>
-        <p>
-          Contact us for availability and pricing.
-        </p>
+        <p>Contact us for availability and pricing.</p>
       </>
     ),
   },
   {
     name: "Transport Services",
+    icon: "🚚",
     content: (
       <>
         <h2>Transport Services</h2>
@@ -46,56 +47,55 @@ const services = [
   },
   {
     name: "Vet Services",
+    icon: "🐄",
     content: (
       <>
         <h2>Vet Services</h2>
         <p>
-          Access professional veterinary services for your livestock. We provide:
+          Access professional veterinary services for your livestock. We
+          provide:
         </p>
         <ul>
           <li>On-site animal health checks</li>
           <li>Vaccinations and treatments</li>
           <li>Emergency care and consultations</li>
         </ul>
-        <p>
-          Book an appointment with a local vet today.
-        </p>
+        <p>Book an appointment with a local vet today.</p>
       </>
     ),
   },
   {
     name: "Labour Near You",
+    icon: "👨‍🌾",
     content: (
       <>
         <h2>Labour Near You</h2>
         <p>
-          Find skilled farm workers in your area for seasonal or ongoing work. Services include:
+          Find skilled farm workers in your area for seasonal or ongoing work.
+          Services include:
         </p>
         <ul>
           <li>Planting and harvesting assistance</li>
           <li>Equipment operation</li>
           <li>General farm maintenance</li>
         </ul>
-        <p>
-          Post a job or browse available workers.
-        </p>
+        <p>Post a job or browse available workers.</p>
       </>
     ),
   },
 ];
 
 export default function FarmingServices() {
-  const [selectedService, setSelectedService] = useState(1); // Default to Transport Services
+  const [selectedService, setSelectedService] = useState(0);
 
   return (
-    <div>
-      {/* Header */}
+    <div className="app">
       <header>
-
+        <h1>Farming Services</h1>
+        <h2>Connecting Farmers with Resources 🌱</h2>
       </header>
 
-      {/* Main Content */}
-      <main>
+      <main className="main">
         {/* Sidebar */}
         <aside className="sidebar">
           {services.map((service, idx) => (
@@ -104,16 +104,18 @@ export default function FarmingServices() {
               className={`service-btn${selectedService === idx ? " active" : ""}`}
               onClick={() => setSelectedService(idx)}
             >
-              {service.name}
+              <span className="icon">{service.icon}</span> {service.name}
             </button>
           ))}
         </aside>
 
-        {/* Content Section */}
-        <section className="content">
-          {services[selectedService].content}
-        </section>
+        {/* Content */}
+        <section className="content">{services[selectedService].content}</section>
       </main>
+
+      <footer>
+        <p>&copy; {new Date().getFullYear()} Farmer’s Hub. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
