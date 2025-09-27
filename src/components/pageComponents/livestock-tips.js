@@ -1,420 +1,603 @@
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import milkedCow from './pictures/milked_cow.jpg';
+import poultryFarm from './pictures/poultry_farm.jpeg';
+import goatsFarm from './pictures/goats_farm.jpeg';
+import goatCheese from './pictures/goat_cheese.jpeg';
+import sheepBreeding from './pictures/sheep_breeding.jpeg';
+import chickenFarming from './pictures/chicken_farming.jpeg';
+import cattleRanch from './pictures/cattle_ranch.jpeg';
 
-export default function LivestockHealthTips() {
-  const [selectedAnimal, setSelectedAnimal] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [alerts, setAlerts] = useState([]);
-  const [showAlertModal, setShowAlertModal] = useState(false);
 
-  const animals = {
-    cows: {
-      name: 'Cows',
-      image: 'https://images.unsplash.com/photo-1500595046743-ddf4d4d31597',
-      healthTips: 'Ensure regular hoof trimming every 6-8 weeks. Provide a balanced diet with sufficient roughage (50-60% of diet). Monitor for signs of mastitis, lameness, and digestive issues. Maintain clean water access at all times.',
-      vaccinations: 'Administer vaccines for bovine respiratory disease, blackleg, and IBR annually. Schedule deworming every 3-4 months. Maintain tailored vaccination schedule based on local disease prevalence.',
-      byproducts: 'Cow milk can be processed into cheese, yogurt, or butter for additional income. Manure serves as excellent organic fertilizer, enhancing soil fertility. Hide can be processed into leather products.',
-      alerts: 'Set reminders for annual vaccinations and booster shots. Schedule vet check-ups every 6 months. Monitor breeding cycles and calving dates.'
-    },
-    chickens: {
-      name: 'Chickens',
-      image: 'https://images.unsplash.com/photo-1585704032915-c281c0913357',
-      healthTips: 'Maintain clean coops with proper ventilation and dry bedding. Provide balanced feed with adequate protein (16-18% for layers). Watch for signs of feather pecking, lethargy, or respiratory issues.',
-      vaccinations: 'Vaccinate against Newcastle disease, infectious bronchitis, and Marek\'s disease. Use antibiotics judiciously to prevent bacterial infections like coccidiosis. Follow vaccination schedule from day-old chicks.',
-      byproducts: 'Eggs can be sold fresh or used in baking and cooking. Chicken manure makes excellent compost when properly aged. Feathers can be composted for garden fertilizer.',
-      alerts: 'Schedule vaccinations every 6 months for adult birds. Replace bedding monthly to maintain hygiene. Monitor egg production rates and quality daily.'
-    },
-    sheep: {
-      name: 'Sheep',
-      image: 'https://images.unsplash.com/photo-1524024973431-2ad916746881',
-      healthTips: 'Check for foot rot regularly, especially in wet conditions. Provide adequate shelter and proper nutrition. Shear annually to prevent overheating and maintain wool quality.',
-      vaccinations: 'Vaccinate against clostridial diseases (5-in-1 or 7-in-1 vaccines). Administer annual boosters and follow pregnancy vaccination protocols. Consult a vet for tailored care plans.',
-      byproducts: 'Wool can be spun into yarn for textiles or sold to processors. Sheep milk produces high-quality cheese. Lanolin from wool is valuable for cosmetics and skincare products.',
-      alerts: 'Schedule shearing in spring before hot weather. Set reminders for booster shots and annual health checks. Monitor flock for parasites monthly.'
-    }
-  };
 
-  const upcomingTasks = [
-    { id: 1, animal: 'cows', task: 'Vaccination due', date: '2025-09-15', priority: 'high' },
-    { id: 2, animal: 'chickens', task: 'Bedding replacement', date: '2025-09-10', priority: 'medium' },
-    { id: 3, animal: 'sheep', task: 'Hoof trimming', date: '2025-09-20', priority: 'high' },
-    { id: 4, animal: 'cows', task: 'Vet checkup', date: '2025-09-25', priority: 'medium' }
+
+const LivestockPage = () => {
+  const [selectedAnimal, setSelectedAnimal] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [hoveredCard, setHoveredCard] = useState(null);
+
+  const animals = ['All', 'Cattle', 'Sheep', 'Goats', 'Poultry'];
+
+  const tips = [
+    { id: 1, animal: 'Cattle', title: 'Cattle Vaccination Schedule', content: 'Vaccinate every 6 months for foot and mouth disease.' },
+    { id: 2, animal: 'Sheep', title: 'Sheep Deworming', content: 'Deworm every 3 months to maintain good health.' },
+    { id: 3, animal: 'Goats', title: 'Goat Care Routine', content: 'Provide clean water and check for ticks weekly.' },
+    { id: 4, animal: 'Poultry', title: 'Poultry Feeding Routine', content: 'Feed layer mash daily and ensure clean water at all times.' },
+    { id: 5, animal: 'Cattle', title: 'Cattle Health Check', content: 'Check temperature and appetite weekly for early illness signs.' },
   ];
 
-  useEffect(() => {
-    const today = new Date();
-    const urgentTasks = upcomingTasks.filter(task => {
-      const taskDate = new Date(task.date);
-      const diffDays = Math.ceil((taskDate - today) / (1000 * 60 * 60 * 24));
-      return diffDays <= 7 && task.priority === 'high';
-    });
-    setAlerts(urgentTasks);
-  }, []);
-
-  const filteredAnimals = () => {
-    if (selectedAnimal === 'all') {
-      return Object.entries(animals).filter(([key, animal]) =>
-        animal.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        animal.healthTips.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+  const stories = [
+    { 
+      id: 1, 
+      title: 'Thabo Molefe\'s Dairy Success', 
+      image: milkedCow,
+      summary: 'Thabo increased milk production by 30% after following our vaccination tips and implementing proper nutrition.',
+      location: 'North West Province',
+      achievement: '30% increase in milk production',
+      contact: 'thabo.molefe@gmail.com',
+      phone: '+27 82 123 4567'
+    },
+    { 
+      id: 2, 
+      title: 'Lerato Mthembu\'s Poultry Empire', 
+      image: poultryFarm,
+      summary: 'Lerato\'s small poultry farm grew from 50 to 500 chickens using proper health management and biosecurity.',
+      location: 'KwaZulu-Natal',
+      achievement: '900% flock growth in 18 months',
+      contact: 'lerato.poultry@outlook.com',
+      phone: '+27 73 987 6543'
+    },
+    { 
+      id: 3, 
+      title: 'Community Goat Initiative', 
+      image: 'https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=400&h=250&fit=crop', 
+      summary: 'A community goat project in Limpopo now sustains 10 families through cooperative farming.',
+      location: 'Limpopo Province',
+      achievement: 'Supports 10 families monthly',
+      contact: 'goats.coop@gmail.com',
+      phone: '+27 76 555 0123'
+    },
+    { 
+      id: 4, 
+      title: 'Maria Ndaba\'s Sheep Wool Success', 
+      image: 'https://images.unsplash.com/photo-1524024973431-2ad916746881?w=400&h=250&fit=crop', 
+      summary: 'Maria transformed her family\'s struggling sheep farm into a profitable wool business serving textile companies.',
+      location: 'Eastern Cape',
+      achievement: 'R25,000 monthly wool income',
+      contact: 'maria.wool@yahoo.com',
+      phone: '+27 41 234 5678'
+    },
+    { 
+      id: 5, 
+      title: 'John Sithole\'s Organic Cattle Ranch', 
+      image: cattleRanch,
+      summary: 'John converted to organic cattle farming and now supplies premium beef to restaurants in Johannesburg.',
+      location: 'Gauteng',
+      achievement: 'Premium organic certification',
+      contact: 'john.organic@farmmail.co.za',
+      phone: '+27 11 876 5432'
+    },
+    { 
+      id: 6, 
+      title: 'Grace Mahlangu\'s Free-Range Chickens', 
+      image: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=400&h=250&fit=crop', 
+      summary: 'Grace built a successful free-range chicken business supplying organic eggs to local markets.',
+      location: 'Mpumalanga',
+      achievement: '80% increase in egg prices',
+      contact: 'grace.freerange@gmail.com',
+      phone: '+27 13 789 0123'
+    },
+    { 
+      id: 7, 
+      title: 'Ahmed Hassan\'s Goat Cheese Business',
+      image: goatCheese,
+      summary: 'Ahmed started producing artisan goat cheese and now supplies high-end restaurants in Cape Town.',
+      location: 'Western Cape',
+      achievement: 'Artisan cheese certification',
+      contact: 'ahmed.cheese@capetown.co.za',
+      phone: '+27 21 456 7890'
+    },
+    { 
+      id: 8, 
+      title: 'Nomsa Khumalo\'s Sheep Breeding Program',
+      image: sheepBreeding, 
+      summary: 'Nomsa developed a selective breeding program that improved her flock\'s resistance to local diseases.',
+      location: 'Free State',
+      achievement: '50% reduction in veterinary costs',
+      contact: 'nomsa.breeding@freestate.co.za',
+      phone: '+27 51 234 8765'
+    },
+    { 
+      id: 9, 
+      title: 'Sipho Dlamini\'s Integrated Farming', 
+      image: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&h=250&fit=crop', 
+      summary: 'Sipho combines cattle, chickens, and vegetable farming in an integrated system that maximizes land use.',
+      location: 'Mpumalanga',
+      achievement: '40% increase in total farm income',
+      contact: 'sipho.integrated@farmnet.co.za',
+      phone: '+27 13 567 8901'
+    },
+    { 
+      id: 10, 
+      title: 'Rebecca Mokoena\'s Poultry Processing', 
+      image: chickenFarming,
+      summary: 'Rebecca added value to her poultry business by starting a small-scale processing operation.',
+      location: 'Northern Cape',
+      achievement: 'R15,000 additional monthly income',
+      contact: 'rebecca.processing@outlook.com',
+      phone: '+27 53 890 1234'
     }
-    return [[selectedAnimal, animals[selectedAnimal]]].filter(([key, animal]) =>
-      animal && (animal.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      animal.healthTips.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
-  };
+  ];
 
-  const handleAnimalSelect = (animalKey) => {
-    setSelectedAnimal(animalKey);
-    setDropdownOpen(false);
-  };
+  const filteredTips = tips.filter((tip) => {
+    const matchAnimal = selectedAnimal === 'All' || tip.animal === selectedAnimal;
+    const matchSearch =
+      tip.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tip.content.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchAnimal && matchSearch;
+  });
 
-  const getPriorityColor = (priority) => {
-    switch(priority) {
-      case 'high': return 'text-red-600 bg-red-50';
-      case 'medium': return 'text-yellow-600 bg-yellow-50';
-      default: return 'text-green-600 bg-green-50';
-    }
-  };
+  const getCardStyle = (cardId) => ({
+    ...styles.card,
+    ...(hoveredCard === cardId ? styles.cardHover : {})
+  });
+
+  const getStoryCardStyle = (storyId) => ({
+    ...styles.storyCard,
+    ...(hoveredCard === storyId ? styles.storyCardHover : {})
+  });
 
   return (
-    <div className="bg-gray-100 font-sans min-h-screen">
-      {/* Alerts Banner */}
-      {alerts.length > 0 && (
-        <div className="bg-red-100 border-l-4 border-red-500 p-4">
-          <div className="container mx-auto flex justify-between items-center">
-            <div className="flex items-center">
-              <div className="ml-3">
-                <p className="text-sm text-red-700">
-                  <strong>Urgent Tasks:</strong> You have {alerts.length} high-priority task(s) due within a week.
-                </p>
-              </div>
-            </div>
-            <button 
-              onClick={() => setShowAlertModal(true)}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 text-sm"
-            >
-              View Details
-            </button>
-          </div>
-        </div>
-      )}
+    <div style={styles.page}>
+      <div style={styles.headerContainer}>
+        <h1 style={styles.header}>Livestock Health Tips & Farmer Stories</h1>
+        <p style={styles.subtitle}>Learn from successful South African farmers and improve your livestock management</p>
+      </div>
 
-      {/* Navigation */}
-      <nav className="bg-green-600 text-white p-4 sticky top-0 z-10 shadow-lg">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="text-2xl font-bold">
-            <a href="#" className="hover:text-green-200">🚜 FarmerHub</a>
-          </div>
-          <div className="flex space-x-6 items-center">
-            <a href="#" className="hover:text-gray-200 transition-colors">Home</a>
-            
-            {/* Working Dropdown */}
-            <div className="relative">
-              <button 
-                onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="hover:text-gray-200 transition-colors flex items-center"
+      {/* Filter + Search */}
+      <div style={styles.filterSearchContainer}>
+        <div style={styles.filterGroup}>
+          <label style={styles.label}>Filter by Animal: </label>
+          <select
+            value={selectedAnimal}
+            onChange={(e) => setSelectedAnimal(e.target.value)}
+            style={styles.dropdown}
+          >
+            {animals.map((animal) => (
+              <option key={animal} value={animal}>
+                {animal}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div style={styles.searchGroup}>
+          <input
+            type="text"
+            placeholder="🔍 Search health tips..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={styles.searchBar}
+          />
+        </div>
+      </div>
+
+      {/* Health Tips */}
+      <section style={styles.section}>
+        <h2 style={styles.sectionHeader}>
+          <span style={styles.sectionIcon}></span>
+          Livestock Health Tips
+        </h2>
+        <div style={styles.cardContainer}>
+          {filteredTips.length > 0 ? (
+            filteredTips.map((tip) => (
+              <div
+                key={tip.id}
+                style={getCardStyle(tip.id)}
+                onMouseEnter={() => setHoveredCard(tip.id)}
+                onMouseLeave={() => setHoveredCard(null)}
               >
-                Livestock 
-                <span className={`ml-1 transform transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}>
-                  ▼
-                </span>
-              </button>
-              {dropdownOpen && (
-                <div className="absolute bg-green-700 text-white rounded-md shadow-lg mt-2 min-w-40 z-20">
-                  <button 
-                    onClick={() => handleAnimalSelect('all')}
-                    className="block w-full text-left px-4 py-2 hover:bg-green-800 transition-colors"
-                  >
-                    All Animals
-                  </button>
-                  <button 
-                    onClick={() => handleAnimalSelect('cows')}
-                    className="block w-full text-left px-4 py-2 hover:bg-green-800 transition-colors"
-                  >
-                    🐄 Cows
-                  </button>
-                  <button 
-                    onClick={() => handleAnimalSelect('chickens')}
-                    className="block w-full text-left px-4 py-2 hover:bg-green-800 transition-colors"
-                  >
-                    🐔 Chickens
-                  </button>
-                  <button 
-                    onClick={() => handleAnimalSelect('sheep')}
-                    className="block w-full text-left px-4 py-2 hover:bg-green-800 transition-colors"
-                  >
-                    🐑 Sheep
-                  </button>
+                <h3 style={styles.cardTitle}>{tip.title}</h3>
+                <p style={styles.cardText}>{tip.content}</p>
+                <div style={styles.cardFooter}>
+                  <span style={styles.cardAnimal}>🐾 {tip.animal}</span>
                 </div>
-              )}
-            </div>
-            
-            <a href="#" className="hover:text-gray-200 transition-colors">Contact</a>
-            <a href="#" className="hover:text-gray-200 transition-colors">About Us</a>
-            
-            {/* Working Search Bar */}
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search animals, tips..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="p-2 pl-8 rounded-md text-gray-800 focus:outline-none focus:ring-2 focus:ring-green-300 transition-all"
-              />
-              <span className="absolute left-2 top-2.5 text-gray-500">🔍</span>
-              {searchTerm && (
-                <button 
-                  onClick={() => setSearchTerm('')}
-                  className="absolute right-2 top-2.5 text-gray-500 hover:text-gray-700"
-                >
-                  ✕
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Close dropdown when clicking outside */}
-      {dropdownOpen && (
-        <div 
-          className="fixed inset-0 z-10" 
-          onClick={() => setDropdownOpen(false)}
-        ></div>
-      )}
-
-      {/* Main Content */}
-      <main className="container mx-auto p-6">
-        {/* Filter Info */}
-        <div className="mb-6 flex justify-between items-center">
-          <div>
-            <h1 className="text-4xl font-bold text-green-700 mb-2">Livestock Health Management</h1>
-            <p className="text-gray-600">
-              {selectedAnimal === 'all' 
-                ? `Showing all animals ${searchTerm ? `matching "${searchTerm}"` : ''}`
-                : `Showing ${animals[selectedAnimal]?.name || 'Unknown'} ${searchTerm ? `matching "${searchTerm}"` : ''}`
-              }
-            </p>
-          </div>
-          <div className="text-sm text-gray-500">
-            {filteredAnimals().length} result(s) found
-          </div>
-        </div>
-
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-white p-4 rounded-lg shadow-md text-center">
-            <h3 className="text-2xl font-bold text-green-600">{Object.keys(animals).length}</h3>
-            <p className="text-gray-600">Animal Types</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-md text-center">
-            <h3 className="text-2xl font-bold text-blue-600">{upcomingTasks.length}</h3>
-            <p className="text-gray-600">Upcoming Tasks</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-md text-center">
-            <h3 className="text-2xl font-bold text-orange-600">{alerts.length}</h3>
-            <p className="text-gray-600">Urgent Alerts</p>
-          </div>
-          <div className="bg-white p-4 rounded-lg shadow-md text-center">
-            <h3 className="text-2xl font-bold text-purple-600">24/7</h3>
-            <p className="text-gray-600">Support Available</p>
-          </div>
-        </div>
-
-        {/* Animal Details */}
-        <section className="mb-12">
-          {filteredAnimals().length === 0 ? (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold text-gray-600 mb-2">No results found</h3>
-              <p className="text-gray-500">Try adjusting your search terms or filters.</p>
+              </div>
+            ))
+          ) : (
+            <div style={styles.noResults}>
+              <div style={styles.noResultsIcon}>🔍</div>
+              <p>No tips found for your search.</p>
               <button 
-                onClick={() => {setSearchTerm(''); setSelectedAnimal('all');}}
-                className="mt-4 bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition-colors"
+                style={styles.clearButton}
+                onClick={() => {setSearchQuery(''); setSelectedAnimal('All');}}
               >
                 Clear Filters
               </button>
             </div>
-          ) : (
-            filteredAnimals().map(([key, animal]) => (
-              <div key={key} className="mb-12">
-                <div className="flex items-center mb-6">
-                  <h2 className="text-3xl font-bold text-green-700">{animal.name}</h2>
-                  <div className="ml-4 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
-                    Active Management
-                  </div>
-                </div>
-                
-                <img
-                  src={animal.image}
-                  alt={animal.name}
-                  className="w-full h-64 object-cover rounded-lg mb-6 shadow-lg"
-                />
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  <div className="bg-white p-6 rounded-lg shadow-md transition-all transform hover:scale-105 hover:shadow-lg border-l-4 border-blue-500">
-                    <div className="flex items-center mb-3">
-                      <span className="text-2xl mr-2">🏥</span>
-                      <h4 className="text-xl font-semibold text-blue-700">Health Tips</h4>
-                    </div>
-                    <p className="text-gray-700">{animal.healthTips}</p>
-                  </div>
-                  
-                  <div className="bg-white p-6 rounded-lg shadow-md transition-all transform hover:scale-105 hover:shadow-lg border-l-4 border-green-500">
-                    <div className="flex items-center mb-3">
-                      <span className="text-2xl mr-2">💉</span>
-                      <h4 className="text-xl font-semibold text-green-700">Vaccinations & Care</h4>
-                    </div>
-                    <p className="text-gray-700">{animal.vaccinations}</p>
-                  </div>
-                  
-                  <div className="bg-white p-6 rounded-lg shadow-md transition-all transform hover:scale-105 hover:shadow-lg border-l-4 border-purple-500">
-                    <div className="flex items-center mb-3">
-                      <span className="text-2xl mr-2">📦</span>
-                      <h4 className="text-xl font-semibold text-purple-700">By-product Uses</h4>
-                    </div>
-                    <p className="text-gray-700">{animal.byproducts}</p>
-                  </div>
-                  
-                  <div className="bg-white p-6 rounded-lg shadow-md transition-all transform hover:scale-105 hover:shadow-lg border-l-4 border-red-500">
-                    <div className="flex items-center mb-3">
-                      <span className="text-2xl mr-2">⏰</span>
-                      <h4 className="text-xl font-semibold text-red-700">Alerts & Reminders</h4>
-                    </div>
-                    <p className="text-gray-700">{animal.alerts}</p>
-                  </div>
-                </div>
-              </div>
-            ))
           )}
-        </section>
+        </div>
+      </section>
 
-        {/* Task Schedule */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-green-700 mb-6">Upcoming Tasks</h2>
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Animal</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Task</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {upcomingTasks.map((task) => (
-                    <tr key={task.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <span className="text-sm font-medium text-gray-900 capitalize">
-                            {animals[task.animal]?.name || task.animal}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{task.task}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{task.date}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getPriorityColor(task.priority)}`}>
-                          {task.priority}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        <button className="text-green-600 hover:text-green-900 font-medium">
-                          Mark Complete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
+      {/* Farmer Stories */}
+      <section style={styles.section}>
+        <h2 style={styles.sectionHeader}>
+          <span style={styles.sectionIcon}>🌟</span>
+          Farmer Success Stories
+        </h2>
+        <div style={styles.storyContainer}>
+          {stories.map((story) => (
+            <div
+              key={story.id}
+              style={getStoryCardStyle(`story-${story.id}`)}
+              onMouseEnter={() => setHoveredCard(`story-${story.id}`)}
+              onMouseLeave={() => setHoveredCard(null)}
+            >
+              <div style={styles.storyImageContainer}>
+                <img src={story.image} alt={story.title} style={styles.storyImage} />
+                <div style={styles.storyOverlay}>
+                  <span style={styles.storyLocation}>📍 {story.location}</span>
+                </div>
+              </div>
+              <div style={styles.storyContent}>
+                <h3 style={styles.storyTitle}>{story.title}</h3>
+                <p style={styles.storySummary}>{story.summary}</p>
+                
+                <div style={styles.achievementBadge}>
+                  <span style={styles.achievementIcon}>🏆</span>
+                  <span style={styles.achievementText}>{story.achievement}</span>
+                </div>
 
-        {/* Success Stories */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-bold text-green-700 mb-6">Farmer Success Stories</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-600 hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-3">
-                <span className="text-3xl mr-3">🥛</span>
-                <h3 className="text-xl font-semibold">John's Dairy Triumph</h3>
-              </div>
-              <p className="text-gray-700">John, a third-generation dairy farmer, transformed his small herd of 20 cows into a 100-cow operation using modern health monitoring. His milk is now sold in regional markets with 30% higher profit margins.</p>
-              <div className="mt-4 text-sm text-green-600 font-medium">↗ 400% herd increase</div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-600 hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-3">
-                <span className="text-3xl mr-3">🥚</span>
-                <h3 className="text-xl font-semibold">Maria's Egg Empire</h3>
-              </div>
-              <p className="text-gray-700">Maria started with just 50 chickens in her backyard. Through proper health management and vaccination schedules, she now manages 2,000 free-range hens, doubling her farm's income.</p>
-              <div className="mt-4 text-sm text-green-600 font-medium">↗ 200% income increase</div>
-            </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-600 hover:shadow-lg transition-shadow">
-              <div className="flex items-center mb-3">
-                <span className="text-3xl mr-3">🧶</span>
-                <h3 className="text-xl font-semibold">Ahmed's Wool Venture</h3>
-              </div>
-              <p className="text-gray-700">Ahmed revived his family's sheep farm by focusing on wool quality through proper nutrition and health care. His premium wool now commands top prices, funding significant farm expansion.</p>
-              <div className="mt-4 text-sm text-green-600 font-medium">↗ Premium pricing achieved</div>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* Alert Modal */}
-      {showAlertModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg max-w-md w-full mx-4 max-h-96 overflow-y-auto">
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-semibold text-red-700">Urgent Tasks</h3>
-              <button 
-                onClick={() => setShowAlertModal(false)}
-                className="text-gray-500 hover:text-gray-700 text-xl"
-              >
-                ✕
-              </button>
-            </div>
-            <div className="space-y-3">
-              {alerts.map((alert) => (
-                <div key={alert.id} className="p-3 bg-red-50 border border-red-200 rounded">
-                  <div className="font-medium text-red-800">{alert.task}</div>
-                  <div className="text-sm text-red-600">
-                    {animals[alert.animal]?.name} - Due: {alert.date}
+                <div style={styles.contactSection}>
+                  <div style={styles.contactItem}>
+                    <span style={styles.contactIcon}>📧</span>
+                    <a 
+                      href={`mailto:${story.contact}`} 
+                      style={styles.contactLink}
+                      title="Send email to this farmer"
+                    >
+                      {story.contact}
+                    </a>
+                  </div>
+                  <div style={styles.contactItem}>
+                    <span style={styles.contactIcon}>📱</span>
+                    <a 
+                      href={`tel:${story.phone}`} 
+                      style={styles.contactLink}
+                      title="Call this farmer"
+                    >
+                      {story.phone}
+                    </a>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
-            <div className="mt-4 text-right">
-              <button 
-                onClick={() => setShowAlertModal(false)}
-                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-              >
-                Close
-              </button>
-            </div>
-          </div>
+          ))}
         </div>
-      )}
+      </section>
 
-      {/* Footer */}
-      <footer className="bg-green-800 text-white p-6 mt-12">
-        <div className="container mx-auto text-center">
-          <p>&copy; 2025 FarmerHub. Empowering farmers with better livestock management.</p>
-          <div className="mt-2 space-x-4">
-            <a href="#" className="hover:text-green-200">Privacy Policy</a>
-            <a href="#" className="hover:text-green-200">Terms of Service</a>
-            <a href="#" className="hover:text-green-200">Support</a>
-          </div>
-        </div>
-      </footer>
+      {/* Call to Action */}
+      <div style={styles.ctaSection}>
+        <h3 style={styles.ctaTitle}>Have Your Own Success Story?</h3>
+        <p style={styles.ctaText}>Share your farming journey and inspire other livestock farmers across South Africa</p>
+        <a 
+          href="mailto:farmstories@farmerhub.co.za"
+          //?subject=My%20Livestock%20Success%20Story&body=Hello,%0D%0A%0D%0AI%20would%20like%20to%20share%20my%20success%20story:%0D%0A%0D%0AFarm%20Location:%20%0D%0AAnimal%20Type:%20%0D%0ASuccess%20Achievement:%20%0D%0AMy%20Story:%20%0D%0A%0D%0AContact%20Details:%0D%0AName:%20%0D%0AEmail:%20%0D%0APhone:%20%0D%0A%0D%0AThank%20you!"
+          style={styles.ctaButton}
+          title="Send us your success story via email"
+        >
+          Share Your Story
+        </a>
+      </div>
     </div>
   );
-}
+};
+
+// Enhanced Styling with better visual hierarchy and modern design
+const styles = {
+  page: {
+    fontFamily: "'Inter', 'Segoe UI', 'Roboto', sans-serif",
+    background: 'linear-gradient(135deg, #f0f9f0 0%, #ffffff 50%, #f9f9f9 100%)',
+    color: '#2d3748',
+    padding: '0',
+    minHeight: '100vh',
+    lineHeight: '1.6',
+  },
+  headerContainer: {
+    textAlign: 'center',
+    padding: '60px 20px 40px',
+    background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+    color: 'white',
+    marginBottom: '40px',
+  },
+  header: {
+    fontSize: '2.75rem',
+    fontWeight: '700',
+    marginBottom: '16px',
+    textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+  },
+  subtitle: {
+    fontSize: '1.2rem',
+    opacity: '0.9',
+    maxWidth: '600px',
+    margin: '0 auto',
+    fontWeight: '300',
+  },
+  filterSearchContainer: {
+    margin: '0 20px 40px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '24px',
+    flexWrap: 'wrap',
+    padding: '20px',
+    backgroundColor: 'white',
+    borderRadius: '16px',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+  },
+  filterGroup: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  searchGroup: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  label: {
+    fontWeight: '600',
+    color: '#16a34a',
+    fontSize: '0.95rem',
+  },
+  dropdown: {
+    padding: '12px 16px',
+    borderRadius: '12px',
+    border: '2px solid #e2e8f0',
+    backgroundColor: '#fff',
+    color: '#2d3748',
+    fontSize: '0.95rem',
+    fontWeight: '500',
+    outline: 'none',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    minWidth: '140px',
+  },
+  searchBar: {
+    padding: '12px 20px',
+    borderRadius: '12px',
+    border: '2px solid #e2e8f0',
+    width: '280px',
+    fontSize: '0.95rem',
+    outline: 'none',
+    transition: 'all 0.3s ease',
+    backgroundColor: '#fff',
+  },
+  section: {
+    margin: '0 20px 60px',
+  },
+  sectionHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    marginBottom: '32px',
+    color: '#16a34a',
+    fontSize: '2.2rem',
+    fontWeight: '700',
+    borderBottom: '3px solid #22c55e',
+    paddingBottom: '12px',
+  },
+  sectionIcon: {
+    fontSize: '2rem',
+  },
+  cardContainer: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+    gap: '24px',
+  },
+  card: {
+    backgroundColor: '#ffffff',
+    padding: '24px',
+    borderRadius: '16px',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+    cursor: 'pointer',
+    border: '1px solid #f0f0f0',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  cardHover: {
+    transform: 'translateY(-8px)',
+    boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+    borderColor: '#22c55e',
+  },
+  cardTitle: {
+    color: '#16a34a',
+    marginBottom: '16px',
+    fontSize: '1.3rem',
+    fontWeight: '600',
+    lineHeight: '1.3',
+  },
+  cardText: {
+    fontSize: '1rem',
+    lineHeight: '1.7',
+    color: '#4a5568',
+    marginBottom: '16px',
+  },
+  cardFooter: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  cardAnimal: {
+    fontSize: '0.9rem',
+    fontWeight: '600',
+    color: '#8b4513',
+    backgroundColor: '#fef5e7',
+    padding: '6px 12px',
+    borderRadius: '20px',
+    border: '1px solid #f6e05e',
+  },
+  noResults: {
+    textAlign: 'center',
+    color: '#718096',
+    gridColumn: '1 / -1',
+    padding: '60px 20px',
+    backgroundColor: 'white',
+    borderRadius: '16px',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+  },
+  noResultsIcon: {
+    fontSize: '4rem',
+    marginBottom: '16px',
+  },
+  clearButton: {
+    marginTop: '16px',
+    padding: '12px 24px',
+    backgroundColor: '#22c55e',
+    color: 'white',
+    border: 'none',
+    borderRadius: '8px',
+    fontSize: '0.95rem',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  },
+  storyContainer: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
+    gap: '32px',
+  },
+  storyCard: {
+    backgroundColor: '#fff',
+    borderRadius: '20px',
+    boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+    border: '1px solid #f0f0f0',
+  },
+  storyCardHover: {
+    transform: 'translateY(-12px)',
+    boxShadow: '0 24px 48px rgba(0,0,0,0.2)',
+  },
+  storyImageContainer: {
+    position: 'relative',
+    height: '220px',
+    overflow: 'hidden',
+  },
+  storyImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    transition: 'transform 0.3s ease',
+  },
+  storyOverlay: {
+    position: 'absolute',
+    top: '16px',
+    left: '16px',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    color: 'white',
+    padding: '8px 12px',
+    borderRadius: '20px',
+    fontSize: '0.85rem',
+    fontWeight: '500',
+  },
+  storyLocation: {
+    color: 'white',
+  },
+  storyContent: {
+    padding: '24px',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  storyTitle: {
+    margin: '0 0 16px 0',
+    color: '#16a34a',
+    fontSize: '1.4rem',
+    fontWeight: '700',
+    lineHeight: '1.3',
+  },
+  storySummary: {
+    fontSize: '1rem',
+    lineHeight: '1.7',
+    color: '#4a5568',
+    marginBottom: '20px',
+    flex: 1,
+  },
+  achievementBadge: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    backgroundColor: '#f0fff4',
+    border: '2px solid #9ae6b4',
+    borderRadius: '12px',
+    padding: '12px 16px',
+    marginBottom: '20px',
+  },
+  achievementIcon: {
+    fontSize: '1.2rem',
+  },
+  achievementText: {
+    fontWeight: '600',
+    color: '#2f855a',
+    fontSize: '0.95rem',
+  },
+  contactSection: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+    paddingTop: '20px',
+    borderTop: '1px solid #e2e8f0',
+  },
+  contactItem: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
+  contactIcon: {
+    fontSize: '1rem',
+    width: '20px',
+  },
+  contactLink: {
+    color: '#22c55e',
+    textDecoration: 'none',
+    fontSize: '0.9rem',
+    fontWeight: '500',
+    transition: 'color 0.3s ease',
+  },
+  ctaSection: {
+    textAlign: 'center',
+    padding: '60px 20px',
+    backgroundColor: '#16a34a',
+    color: 'white',
+    margin: '60px 20px 0',
+    borderRadius: '20px',
+  },
+  ctaTitle: {
+    fontSize: '2rem',
+    fontWeight: '700',
+    marginBottom: '16px',
+  },
+  ctaText: {
+    fontSize: '1.1rem',
+    marginBottom: '32px',
+    opacity: '0.9',
+    maxWidth: '600px',
+    margin: '0 auto 32px',
+  },
+  ctaButton: {
+    display: 'inline-block',
+    backgroundColor: '#22c55e',
+    color: 'white',
+    textDecoration: 'none',
+    padding: '16px 32px',
+    fontSize: '1.1rem',
+    fontWeight: '600',
+    borderRadius: '12px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+  },
+};
+
+export default LivestockPage;

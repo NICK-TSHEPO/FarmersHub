@@ -1,210 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+//import "./livestock-tips.css";
+
+const seasonalData = {
+  summer: {
+    title: "🌞 Summer (Dec–Feb)",
+    crops: [
+      { id: 1, name: "Maize", description: "Staple summer crop, high yield.", price: "R150 per bag", image: "https://images.unsplash.com/photo-1592928302844-0502d6a24686?auto=format&fit=crop&w=800&q=80" },
+      { id: 2, name: "Sorghum", description: "Drought-resistant and nutritious grain.", price: "R120 per bag", image: "https://images.unsplash.com/photo-1607305387291-eda9619e9c64?auto=format&fit=crop&w=800&q=80" },
+      { id: 3, name: "Soybeans", description: "High-protein legumes for livestock and people.", price: "R200 per bag", image: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=800&q=80" },
+      { id: 4, name: "Sunflower", description: "Popular oilseed crop with many uses.", price: "R180 per bag", image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=800&q=80" },
+    ],
+  },
+  autumn: {
+    title: "🍂 Autumn (Mar–May)",
+    crops: [
+      { id: 5, name: "Dry Beans", description: "Rich in protein, ideal for cooler months.", price: "R90 per bag", image: "https://images.unsplash.com/photo-1621413109339-fc3cfec08d48?auto=format&fit=crop&w=800&q=80" },
+      { id: 6, name: "Broccoli", description: "Nutritious and frost-tolerant.", price: "R35 per kg", image: "https://images.unsplash.com/photo-1617196034665-58a3b16130ad?auto=format&fit=crop&w=800&q=80" },
+      { id: 7, name: "Spinach", description: "Fast-growing leafy green.", price: "R20 per bunch", image: "https://images.unsplash.com/photo-1617191519105-cb2c0b77d85e?auto=format&fit=crop&w=800&q=80" },
+      { id: 8, name: "Cabbage", description: "Hardy vegetable, thrives in cool weather.", price: "R25 per head", image: "https://images.unsplash.com/photo-1621939514644-fb7458ebc2c1?auto=format&fit=crop&w=800&q=80" },
+    ],
+  },
+  winter: {
+    title: "❄️ Winter (Jun–Aug)",
+    crops: [
+      { id: 9, name: "Carrots", description: "Root crop rich in Vitamin A.", price: "R30 per kg", image: "https://images.unsplash.com/photo-1567303311878-22fbef1ff9f3?auto=format&fit=crop&w=800&q=80" },
+      { id: 10, name: "Onions", description: "Essential kitchen staple.", price: "R40 per bag", image: "https://images.unsplash.com/photo-1600089463319-5b4c8df29cf2?auto=format&fit=crop&w=800&q=80" },
+      { id: 11, name: "Garlic", description: "Strong-flavored bulb, good for immunity.", price: "R50 per kg", image: "https://images.unsplash.com/photo-1603032869205-ffa6906ad43a?auto=format&fit=crop&w=800&q=80" },
+      { id: 12, name: "Kale", description: "Superfood leafy green, frost-tolerant.", price: "R25 per bunch", image: "https://images.unsplash.com/photo-1598367815098-df8b2a88b73f?auto=format&fit=crop&w=800&q=80" },
+    ],
+  },
+  spring: {
+    title: "🌱 Spring (Sep–Nov)",
+    crops: [
+      { id: 13, name: "Tomatoes", description: "Juicy and versatile fruit-vegetable.", price: "R30 per kg", image: "https://images.unsplash.com/photo-1567306226416-28f0efdc88ce?auto=format&fit=crop&w=800&q=80" },
+      { id: 14, name: "Peppers", description: "Colorful and high in Vitamin C.", price: "R40 per kg", image: "https://images.unsplash.com/photo-1603052875510-4f3e3caa3a48?auto=format&fit=crop&w=800&q=80" },
+      { id: 15, name: "Cucumbers", description: "Refreshing salad essential.", price: "R25 per kg", image: "https://images.unsplash.com/photo-1590595906687-8fd72b1e4f44?auto=format&fit=crop&w=800&q=80" },
+      { id: 16, name: "Pumpkins", description: "Large, nutritious, and long-lasting.", price: "R60 each", image: "https://images.unsplash.com/photo-1603052875507-cb6d2ff7e94d?auto=format&fit=crop&w=800&q=80" },
+    ],
+  },
+};
 
 const FarmersHub = () => {
-  const [activeTab, setActiveTab] = useState('summer');
-
-  const handleTabClick = (season) => {
-    setActiveTab(season);
-  };
+  const [activeTab, setActiveTab] = useState("summer");
+  const { title, crops } = seasonalData[activeTab];
 
   return (
     <div>
-      {/* Embedded styling */}
-      <style>
-        {`
-          :root {
-            --primary-color: #2e7d32;
-            --secondary-color: #a5d6a7;
-            --background-color: #f0f4f3;
-            --tab-color: #c8e6c9;
-            --tab-active-color: #81c784;
-            --alert-color: #d32f2f;
-          }
-
-          body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: var(--background-color);
-            color: #333;
-          }
-
-          header, footer {
-            text-align: center;
-            margin-bottom: 20px;
-          }
-
-          header h1 {
-            color: var(--primary-color);
-          }
-
-          header h2 {
-            color: var(--secondary-color);
-          }
-
-          .tabs {
-            display: flex;
-            margin-bottom: 10px;
-          }
-
-          .tab {
-            padding: 10px 15px;
-            border: 1px solid #333;
-            cursor: pointer;
-            margin-right: 5px;
-            background-color: var(--tab-color);
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            transition: background 0.3s;
-          }
-
-          .tab:hover {
-            background-color: var(--tab-active-color);
-          }
-
-          .tab i {
-            margin-right: 5px;
-          }
-
-          .tab.active {
-            background-color: var(--tab-active-color);
-            font-weight: bold;
-          }
-
-          .tab-content {
-            border: 1px solid #333;
-            padding: 15px;
-            display: none;
-            border-radius: 5px;
-            background-color: #fff;
-          }
-
-          .tab-content.active {
-            display: block;
-          }
-
-          h3 {
-            margin-top: 0;
-            color: var(--primary-color);
-          }
-
-          h4 {
-            margin-bottom: 5px;
-            color: var(--secondary-color);
-          }
-
-          img {
-            max-width: 100%;
-            height: auto;
-            margin-top: 10px;
-            border-radius: 5px;
-          }
-
-          ul {
-            margin-top: 0;
-          }
-
-          .section {
-            margin-bottom: 15px;
-          }
-
-          .alert {
-            color: var(--alert-color);
-            font-weight: bold;
-          }
-
-          footer {
-            font-size: 0.9em;
-            color: #555;
-          }
-
-          .more-btn {
-            margin-top: 10px;
-            padding: 8px 12px;
-            background-color: var(--primary-color);
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-          }
-
-          .more-btn:hover {
-            background-color: var(--tab-active-color);
-          }
-        `}
-      </style>
-
       <header>
-        <h1><i className="fas fa-seedling"></i> FarmersHub</h1>
+        <h1>🚜 FarmersHub</h1>
         <h2>Seasonal Crop Recommendations – South African Farmers</h2>
-        <p>Select a season to view crops, pests/diseases, and farming tips.</p>
+        <p>Grow smarter with seasonal insights, tips, and best practices.</p>
       </header>
 
       <div className="tabs">
-        <div
-          className={`tab ${activeTab === 'summer' ? 'active' : ''}`}
-          onClick={() => handleTabClick('summer')}
-        >
-          <i className="fas fa-sun"></i> Summer
-        </div>
-        <div
-          className={`tab ${activeTab === 'autumn' ? 'active' : ''}`}
-          onClick={() => handleTabClick('autumn')}
-        >
-          <i className="fas fa-leaf"></i> Autumn
-        </div>
-        <div
-          className={`tab ${activeTab === 'winter' ? 'active' : ''}`}
-          onClick={() => handleTabClick('winter')}
-        >
-          <i className="fas fa-snowflake"></i> Winter
-        </div>
-        <div
-          className={`tab ${activeTab === 'spring' ? 'active' : ''}`}
-          onClick={() => handleTabClick('spring')}
-        >
-          <i className="fas fa-cloud-sun"></i> Spring
-        </div>
+        {Object.keys(seasonalData).map((season) => (
+          <div
+            key={season}
+            className={`tab ${activeTab === season ? "active" : ""}`}
+            onClick={() => setActiveTab(season)}
+          >
+            {season.charAt(0).toUpperCase() + season.slice(1)}
+          </div>
+        ))}
       </div>
 
-      {/* Content Sections */}
-      <div className={`tab-content ${activeTab === 'summer' ? 'active' : ''}`}>
-        <h3><i className="fas fa-sun"></i> Summer (Dec–Feb)</h3>
-        <div className="section">
-          <h4>Best Crops to Plant</h4>
-          <ul>
-            <li>Maize, sorghum, soybeans, sunflower</li>
-          </ul>
-        </div>
-      </div>
-
-      <div className={`tab-content ${activeTab === 'autumn' ? 'active' : ''}`}>
-        <h3><i className="fas fa-leaf"></i> Autumn (Mar–May)</h3>
-        <div className="section">
-          <h4>Best Crops to Plant</h4>
-          <ul>
-            <li>Dry beans, broccoli, spinach, cabbage</li>
-          </ul>
-        </div>
-      </div>
-
-      <div className={`tab-content ${activeTab === 'winter' ? 'active' : ''}`}>
-        <h3><i className="fas fa-snowflake"></i> Winter (Jun–Aug)</h3>
-        <div className="section">
-          <h4>Best Crops to Plant</h4>
-          <ul>
-            <li>Carrots, onions, garlic, kale</li>
-          </ul>
-        </div>
-      </div>
-
-      <div className={`tab-content ${activeTab === 'spring' ? 'active' : ''}`}>
-        <h3><i className="fas fa-cloud-sun"></i> Spring (Sep–Nov)</h3>
-        <div className="section">
-          <h4>Best Crops to Plant</h4>
-          <ul>
-            <li>Tomatoes, peppers, cucumbers, pumpkins</li>
-          </ul>
+      <div className="tab-content">
+        <h3>{title}</h3>
+        <div className="crops">
+          {crops.map((crop) => (
+            <div key={crop.id} className="crop-card">
+              <img src={crop.image} alt={crop.name} />
+              <div className="info">
+                <h4>{crop.name}</h4>
+                <p>{crop.description}</p>
+                <p className="price">{crop.price}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
