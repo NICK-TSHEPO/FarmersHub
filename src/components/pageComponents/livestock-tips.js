@@ -1,555 +1,603 @@
 import React, { useState } from 'react';
+import milkedCow from './pictures/milked_cow.jpg';
+import poultryFarm from './pictures/poultry_farm.jpeg';
+import goatsFarm from './pictures/goats_farm.jpeg';
+import goatCheese from './pictures/goat_cheese.jpeg';
+import sheepBreeding from './pictures/sheep_breeding.jpeg';
+import chickenFarming from './pictures/chicken_farming.jpeg';
+import cattleRanch from './pictures/cattle_ranch.jpeg';
 
-// Mock data
-const livestockData = {
-  cows: {
-    name: 'Cows',
-    image: 'https://images.unsplash.com/photo-1500595046743-ddf4d4d31597?w=800&q=80',
-    healthTips: 'Ensure regular hoof trimming to prevent lameness. Monitor for signs of mastitis, such as udder swelling or abnormal milk. Provide clean water and a balanced diet with sufficient roughage.',
-    vaccinations: 'Administer vaccines for bovine respiratory disease and clostridial infections annually. Deworm regularly and consult a vet for a tailored vaccination schedule.',
-    byProducts: 'Cow milk can be processed into cheese, yogurt, or butter. Manure can be composted for organic fertilizer, enhancing soil fertility for crop production.',
-    alerts: 'Set reminders for annual vaccinations (e.g., IBR, BVD). Check for parasites monthly and schedule vet check-ups every 6 months to maintain herd health.'
-  },
-  chickens: {
-    name: 'Chickens',
-    image: 'https://images.unsplash.com/photo-1585704032915-c281c0913357?w=800&q=80',
-    healthTips: 'Maintain clean coops to prevent respiratory issues. Provide calcium supplements for strong eggshells. Watch for signs of feather pecking or lethargy.',
-    vaccinations: 'Vaccinate against Newcastle disease and Marek\'s disease at hatching. Regularly clean waterers to prevent bacterial infections like coccidiosis.',
-    byProducts: 'Eggs can be sold fresh or used in baking. Chicken manure is rich in nitrogen and can be composted for garden fertilizer.',
-    alerts: 'Schedule vaccinations every 6 months. Monitor flock behavior weekly for early signs of illness. Replace bedding monthly to maintain hygiene.'
-  },
-  sheep: {
-    name: 'Sheep',
-    image: 'https://images.unsplash.com/photo-1524024973431-2ad916746881?w=800&q=80',
-    healthTips: 'Check for foot rot regularly, especially in wet conditions. Provide mineral supplements to prevent deficiencies. Shear annually to prevent overheating.',
-    vaccinations: 'Vaccinate against clostridial diseases and tetanus. Deworm every 3-4 months based on fecal egg counts. Consult a vet for tailored care plans.',
-    byProducts: 'Wool can be spun into yarn for textiles. Sheep milk can be used for specialty cheeses. Lanolin from wool is valuable for cosmetics.',
-    alerts: 'Schedule shearing in spring. Monitor for parasites bi-monthly. Set reminders for booster shots and annual health checks with a vet.'
-  }
-};
 
-const successStories = [
-  {
-    title: "John's Dairy Triumph",
-    content: "John, a third-generation dairy farmer, transformed his small herd into a thriving business by implementing regular health checks and a strict vaccination schedule. By using cow manure as fertilizer, he boosted crop yields by 30%, creating a sustainable cycle. His innovative approach to milk processing led to a popular local yogurt brand, now sold in regional markets."
-  },
-  {
-    title: "Maria's Egg Empire",
-    content: "Maria started with just 50 chickens and faced challenges with disease outbreaks. After adopting rigorous coop hygiene and vaccination protocols, her flock grew to 500. She now supplies eggs to local restaurants and uses chicken manure to fertilize her organic vegetable garden, doubling her farm's income."
-  },
-  {
-    title: "Ahmed's Wool Venture",
-    content: "Ahmed revived his family's sheep farm by focusing on wool quality. Regular shearing and parasite control improved his flock's health, leading to premium wool sales. He also started producing lanolin-based skincare products, creating a new revenue stream that funded farm expansion."
-  }
-];
 
-const HealthTips = () => {
-  const [selectedAnimal, setSelectedAnimal] = useState(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+const LivestockPage = () => {
+  const [selectedAnimal, setSelectedAnimal] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [hoveredCard, setHoveredCard] = useState(null);
 
-  const handleAnimalSelect = (animal) => {
-    setSelectedAnimal(animal);
-    setDropdownOpen(false);
-  };
+  const animals = ['All', 'Cattle', 'Sheep', 'Goats', 'Poultry'];
+
+  const tips = [
+    { id: 1, animal: 'Cattle', title: 'Cattle Vaccination Schedule', content: 'Vaccinate every 6 months for foot and mouth disease.' },
+    { id: 2, animal: 'Sheep', title: 'Sheep Deworming', content: 'Deworm every 3 months to maintain good health.' },
+    { id: 3, animal: 'Goats', title: 'Goat Care Routine', content: 'Provide clean water and check for ticks weekly.' },
+    { id: 4, animal: 'Poultry', title: 'Poultry Feeding Routine', content: 'Feed layer mash daily and ensure clean water at all times.' },
+    { id: 5, animal: 'Cattle', title: 'Cattle Health Check', content: 'Check temperature and appetite weekly for early illness signs.' },
+  ];
+
+  const stories = [
+    { 
+      id: 1, 
+      title: 'Thabo Molefe\'s Dairy Success', 
+      image: milkedCow,
+      summary: 'Thabo increased milk production by 30% after following our vaccination tips and implementing proper nutrition.',
+      location: 'North West Province',
+      achievement: '30% increase in milk production',
+      contact: 'thabo.molefe@gmail.com',
+      phone: '+27 82 123 4567'
+    },
+    { 
+      id: 2, 
+      title: 'Lerato Mthembu\'s Poultry Empire', 
+      image: poultryFarm,
+      summary: 'Lerato\'s small poultry farm grew from 50 to 500 chickens using proper health management and biosecurity.',
+      location: 'KwaZulu-Natal',
+      achievement: '900% flock growth in 18 months',
+      contact: 'lerato.poultry@outlook.com',
+      phone: '+27 73 987 6543'
+    },
+    { 
+      id: 3, 
+      title: 'Community Goat Initiative', 
+      image: 'https://images.unsplash.com/photo-1516467508483-a7212febe31a?w=400&h=250&fit=crop', 
+      summary: 'A community goat project in Limpopo now sustains 10 families through cooperative farming.',
+      location: 'Limpopo Province',
+      achievement: 'Supports 10 families monthly',
+      contact: 'goats.coop@gmail.com',
+      phone: '+27 76 555 0123'
+    },
+    { 
+      id: 4, 
+      title: 'Maria Ndaba\'s Sheep Wool Success', 
+      image: 'https://images.unsplash.com/photo-1524024973431-2ad916746881?w=400&h=250&fit=crop', 
+      summary: 'Maria transformed her family\'s struggling sheep farm into a profitable wool business serving textile companies.',
+      location: 'Eastern Cape',
+      achievement: 'R25,000 monthly wool income',
+      contact: 'maria.wool@yahoo.com',
+      phone: '+27 41 234 5678'
+    },
+    { 
+      id: 5, 
+      title: 'John Sithole\'s Organic Cattle Ranch', 
+      image: cattleRanch,
+      summary: 'John converted to organic cattle farming and now supplies premium beef to restaurants in Johannesburg.',
+      location: 'Gauteng',
+      achievement: 'Premium organic certification',
+      contact: 'john.organic@farmmail.co.za',
+      phone: '+27 11 876 5432'
+    },
+    { 
+      id: 6, 
+      title: 'Grace Mahlangu\'s Free-Range Chickens', 
+      image: 'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=400&h=250&fit=crop', 
+      summary: 'Grace built a successful free-range chicken business supplying organic eggs to local markets.',
+      location: 'Mpumalanga',
+      achievement: '80% increase in egg prices',
+      contact: 'grace.freerange@gmail.com',
+      phone: '+27 13 789 0123'
+    },
+    { 
+      id: 7, 
+      title: 'Ahmed Hassan\'s Goat Cheese Business',
+      image: goatCheese,
+      summary: 'Ahmed started producing artisan goat cheese and now supplies high-end restaurants in Cape Town.',
+      location: 'Western Cape',
+      achievement: 'Artisan cheese certification',
+      contact: 'ahmed.cheese@capetown.co.za',
+      phone: '+27 21 456 7890'
+    },
+    { 
+      id: 8, 
+      title: 'Nomsa Khumalo\'s Sheep Breeding Program',
+      image: sheepBreeding, 
+      summary: 'Nomsa developed a selective breeding program that improved her flock\'s resistance to local diseases.',
+      location: 'Free State',
+      achievement: '50% reduction in veterinary costs',
+      contact: 'nomsa.breeding@freestate.co.za',
+      phone: '+27 51 234 8765'
+    },
+    { 
+      id: 9, 
+      title: 'Sipho Dlamini\'s Integrated Farming', 
+      image: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&h=250&fit=crop', 
+      summary: 'Sipho combines cattle, chickens, and vegetable farming in an integrated system that maximizes land use.',
+      location: 'Mpumalanga',
+      achievement: '40% increase in total farm income',
+      contact: 'sipho.integrated@farmnet.co.za',
+      phone: '+27 13 567 8901'
+    },
+    { 
+      id: 10, 
+      title: 'Rebecca Mokoena\'s Poultry Processing', 
+      image: chickenFarming,
+      summary: 'Rebecca added value to her poultry business by starting a small-scale processing operation.',
+      location: 'Northern Cape',
+      achievement: 'R15,000 additional monthly income',
+      contact: 'rebecca.processing@outlook.com',
+      phone: '+27 53 890 1234'
+    }
+  ];
+
+  const filteredTips = tips.filter((tip) => {
+    const matchAnimal = selectedAnimal === 'All' || tip.animal === selectedAnimal;
+    const matchSearch =
+      tip.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      tip.content.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchAnimal && matchSearch;
+  });
+
+  const getCardStyle = (cardId) => ({
+    ...styles.card,
+    ...(hoveredCard === cardId ? styles.cardHover : {})
+  });
+
+  const getStoryCardStyle = (storyId) => ({
+    ...styles.storyCard,
+    ...(hoveredCard === storyId ? styles.storyCardHover : {})
+  });
 
   return (
-    <div style={styles.container}>
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes slideDown {
-          from { opacity: 0; max-height: 0; }
-          to { opacity: 1; max-height: 300px; }
-        }
-        
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.05); }
-        }
-        
-        .grid-card:hover {
-          transform: translateY(-5px) scale(1.02);
-          box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
-        
-        .dropdown-menu {
-          animation: slideDown 0.3s ease-out;
-        }
-        
-        .animal-section {
-          animation: fadeIn 0.6s ease-out;
-        }
-        
-        .success-story:hover {
-          transform: translateX(10px);
-          box-shadow: 0 8px 16px rgba(76, 175, 80, 0.2);
-        }
-        
-        .nav-link:hover {
-          transform: translateY(-2px);
-        }
-        
-        .search-input:focus {
-          width: 250px;
-        }
-        
-        .btn-primary:hover {
-          background: linear-gradient(135deg, #43a047, #2e7d32);
-          transform: scale(1.05);
-        }
-      `}</style>
+    <div style={styles.page}>
+      <div style={styles.headerContainer}>
+        <h1 style={styles.header}>Livestock Health Tips & Farmer Stories</h1>
+        <p style={styles.subtitle}>Learn from successful South African farmers and improve your livestock management</p>
+      </div>
 
-      {/* Navigation */}
-      <nav style={styles.nav}>
-        <div style={styles.navContainer}>
-          <div style={styles.logo}>
-            <span style={styles.logoIcon}>🌾</span>
-            FarmersHub
-          </div>
-          
-          <div style={styles.menu}>
-            <a href="#" style={styles.navLink} className="nav-link">Home</a>
-            
-            {/* Dropdown */}
-            <div 
-              style={styles.dropdownContainer}
-              onMouseEnter={() => setDropdownOpen(true)}
-              onMouseLeave={() => setDropdownOpen(false)}
-            >
-              <button style={styles.dropdownButton}>
-                Livestock <span style={styles.arrow}>▼</span>
-              </button>
-              {dropdownOpen && (
-                <div style={styles.dropdownMenu} className="dropdown-menu">
-                  <a 
-                    onClick={() => handleAnimalSelect('cows')}
-                    style={{
-                      ...styles.dropdownItem,
-                      ...(selectedAnimal === 'cows' ? styles.dropdownItemActive : {})
-                    }}
-                  >
-                    🐄 Cows
-                  </a>
-                  <a 
-                    onClick={() => handleAnimalSelect('chickens')}
-                    style={{
-                      ...styles.dropdownItem,
-                      ...(selectedAnimal === 'chickens' ? styles.dropdownItemActive : {})
-                    }}
-                  >
-                    🐔 Chickens
-                  </a>
-                  <a 
-                    onClick={() => handleAnimalSelect('sheep')}
-                    style={{
-                      ...styles.dropdownItem,
-                      ...(selectedAnimal === 'sheep' ? styles.dropdownItemActive : {})
-                    }}
-                  >
-                    🐑 Sheep
-                  </a>
-                </div>
-              )}
-            </div>
-            
-            <a href="#" style={styles.navLink} className="nav-link">Contact</a>
-            <a href="#" style={styles.navLink} className="nav-link">About Us</a>
-            
-            <div style={styles.searchContainer}>
-              <input
-                type="text"
-                placeholder="Search..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                style={styles.searchInput}
-                className="search-input"
-              />
-              <span style={styles.searchIcon}>🔍</span>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <main style={styles.main}>
-        {/* Hero Section */}
-        <div style={styles.heroSection}>
-          <h1 style={styles.heroTitle}>Livestock Health Tips</h1>
-          <p style={styles.heroSubtitle}>
-            Your comprehensive guide to maintaining healthy and productive livestock
-          </p>
-        </div>
-
-        {/* Instructions or Animal Details */}
-        {!selectedAnimal ? (
-          <div style={styles.instructionSection}>
-            <div style={styles.instructionCard}>
-              <h2 style={styles.instructionTitle}>Welcome to FarmersHub</h2>
-              <p style={styles.instructionText}>
-                Select an animal from the Livestock dropdown menu above to view comprehensive health tips, 
-                vaccination schedules, by-product uses, and important alerts.
-              </p>
-              <div style={styles.featureGrid}>
-                <div style={styles.featureCard}>
-                  <span style={styles.featureIcon}>💊</span>
-                  <h3>Health Management</h3>
-                  <p>Expert tips for maintaining optimal livestock health</p>
-                </div>
-                <div style={styles.featureCard}>
-                  <span style={styles.featureIcon}>💉</span>
-                  <h3>Vaccination Schedules</h3>
-                  <p>Stay on top of important immunizations</p>
-                </div>
-                <div style={styles.featureCard}>
-                  <span style={styles.featureIcon}>📦</span>
-                  <h3>By-Product Uses</h3>
-                  <p>Maximize value from your livestock</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <section style={styles.animalSection} className="animal-section">
-            <h2 style={styles.animalTitle}>{livestockData[selectedAnimal].name}</h2>
-            <img 
-              src={livestockData[selectedAnimal].image} 
-              alt={livestockData[selectedAnimal].name}
-              style={styles.animalImage}
-            />
-            
-            <div style={styles.gridContainer}>
-              <div style={styles.gridCard} className="grid-card">
-                <div style={styles.cardIcon}>🏥</div>
-                <h3 style={styles.cardTitle}>Health Tips</h3>
-                <p style={styles.cardContent}>{livestockData[selectedAnimal].healthTips}</p>
-              </div>
-              
-              <div style={styles.gridCard} className="grid-card">
-                <div style={styles.cardIcon}>💉</div>
-                <h3 style={styles.cardTitle}>Vaccinations & Care</h3>
-                <p style={styles.cardContent}>{livestockData[selectedAnimal].vaccinations}</p>
-              </div>
-              
-              <div style={styles.gridCard} className="grid-card">
-                <div style={styles.cardIcon}>📦</div>
-                <h3 style={styles.cardTitle}>By-product Uses</h3>
-                <p style={styles.cardContent}>{livestockData[selectedAnimal].byProducts}</p>
-              </div>
-              
-              <div style={styles.gridCard} className="grid-card">
-                <div style={styles.cardIcon}>🔔</div>
-                <h3 style={styles.cardTitle}>Alerts & Reminders</h3>
-                <p style={styles.cardContent}>{livestockData[selectedAnimal].alerts}</p>
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Success Stories */}
-        <section style={styles.successSection}>
-          <h2 style={styles.sectionTitle}>Farmer Success Stories</h2>
-          <div style={styles.storiesContainer}>
-            {successStories.map((story, index) => (
-              <div key={index} style={styles.successStory} className="success-story">
-                <div style={styles.storyIcon}>🌟</div>
-                <h3 style={styles.storyTitle}>{story.title}</h3>
-                <p style={styles.storyContent}>{story.content}</p>
-              </div>
+      {/* Filter + Search */}
+      <div style={styles.filterSearchContainer}>
+        <div style={styles.filterGroup}>
+          <label style={styles.label}>Filter by Animal: </label>
+          <select
+            value={selectedAnimal}
+            onChange={(e) => setSelectedAnimal(e.target.value)}
+            style={styles.dropdown}
+          >
+            {animals.map((animal) => (
+              <option key={animal} value={animal}>
+                {animal}
+              </option>
             ))}
-          </div>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer style={styles.footer}>
-        <div style={styles.footerContent}>
-          <p>© 2025 FarmersHub. All rights reserved.</p>
-          <p style={styles.footerTagline}>Growing Together, Thriving Together 🌱</p>
+          </select>
         </div>
-      </footer>
+        <div style={styles.searchGroup}>
+          <input
+            type="text"
+            placeholder="🔍 Search health tips..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={styles.searchBar}
+          />
+        </div>
+      </div>
+
+      {/* Health Tips */}
+      <section style={styles.section}>
+        <h2 style={styles.sectionHeader}>
+          <span style={styles.sectionIcon}></span>
+          Livestock Health Tips
+        </h2>
+        <div style={styles.cardContainer}>
+          {filteredTips.length > 0 ? (
+            filteredTips.map((tip) => (
+              <div
+                key={tip.id}
+                style={getCardStyle(tip.id)}
+                onMouseEnter={() => setHoveredCard(tip.id)}
+                onMouseLeave={() => setHoveredCard(null)}
+              >
+                <h3 style={styles.cardTitle}>{tip.title}</h3>
+                <p style={styles.cardText}>{tip.content}</p>
+                <div style={styles.cardFooter}>
+                  <span style={styles.cardAnimal}>🐾 {tip.animal}</span>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div style={styles.noResults}>
+              <div style={styles.noResultsIcon}>🔍</div>
+              <p>No tips found for your search.</p>
+              <button 
+                style={styles.clearButton}
+                onClick={() => {setSearchQuery(''); setSelectedAnimal('All');}}
+              >
+                Clear Filters
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Farmer Stories */}
+      <section style={styles.section}>
+        <h2 style={styles.sectionHeader}>
+          <span style={styles.sectionIcon}>🌟</span>
+          Farmer Success Stories
+        </h2>
+        <div style={styles.storyContainer}>
+          {stories.map((story) => (
+            <div
+              key={story.id}
+              style={getStoryCardStyle(`story-${story.id}`)}
+              onMouseEnter={() => setHoveredCard(`story-${story.id}`)}
+              onMouseLeave={() => setHoveredCard(null)}
+            >
+              <div style={styles.storyImageContainer}>
+                <img src={story.image} alt={story.title} style={styles.storyImage} />
+                <div style={styles.storyOverlay}>
+                  <span style={styles.storyLocation}>📍 {story.location}</span>
+                </div>
+              </div>
+              <div style={styles.storyContent}>
+                <h3 style={styles.storyTitle}>{story.title}</h3>
+                <p style={styles.storySummary}>{story.summary}</p>
+                
+                <div style={styles.achievementBadge}>
+                  <span style={styles.achievementIcon}>🏆</span>
+                  <span style={styles.achievementText}>{story.achievement}</span>
+                </div>
+
+                <div style={styles.contactSection}>
+                  <div style={styles.contactItem}>
+                    <span style={styles.contactIcon}>📧</span>
+                    <a 
+                      href={`mailto:${story.contact}`} 
+                      style={styles.contactLink}
+                      title="Send email to this farmer"
+                    >
+                      {story.contact}
+                    </a>
+                  </div>
+                  <div style={styles.contactItem}>
+                    <span style={styles.contactIcon}>📱</span>
+                    <a 
+                      href={`tel:${story.phone}`} 
+                      style={styles.contactLink}
+                      title="Call this farmer"
+                    >
+                      {story.phone}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <div style={styles.ctaSection}>
+        <h3 style={styles.ctaTitle}>Have Your Own Success Story?</h3>
+        <p style={styles.ctaText}>Share your farming journey and inspire other livestock farmers across South Africa</p>
+        <a 
+          href="mailto:farmstories@farmerhub.co.za"
+          //?subject=My%20Livestock%20Success%20Story&body=Hello,%0D%0A%0D%0AI%20would%20like%20to%20share%20my%20success%20story:%0D%0A%0D%0AFarm%20Location:%20%0D%0AAnimal%20Type:%20%0D%0ASuccess%20Achievement:%20%0D%0AMy%20Story:%20%0D%0A%0D%0AContact%20Details:%0D%0AName:%20%0D%0AEmail:%20%0D%0APhone:%20%0D%0A%0D%0AThank%20you!"
+          style={styles.ctaButton}
+          title="Send us your success story via email"
+        >
+          Share Your Story
+        </a>
+      </div>
     </div>
   );
 };
 
+// Enhanced Styling with better visual hierarchy and modern design
 const styles = {
-  container: {
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
-    background: 'linear-gradient(to bottom, #f0f9f0, #ffffff)',
+  page: {
+    fontFamily: "'Inter', 'Segoe UI', 'Roboto', sans-serif",
+    background: 'linear-gradient(135deg, #f0f9f0 0%, #ffffff 50%, #f9f9f9 100%)',
+    color: '#2d3748',
+    padding: '0',
     minHeight: '100vh',
-    margin: 0,
-    padding: 0,
+    lineHeight: '1.6',
   },
-  nav: {
-    background: 'linear-gradient(135deg, #4CAF50, #388E3C)',
+  headerContainer: {
+    textAlign: 'center',
+    padding: '60px 20px 40px',
+    background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
     color: 'white',
-    padding: '1rem 0',
-    position: 'sticky',
-    top: 0,
-    zIndex: 100,
-    boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+    marginBottom: '40px',
   },
-  navContainer: {
-    maxWidth: '1200px',
+  header: {
+    fontSize: '2.75rem',
+    fontWeight: '700',
+    marginBottom: '16px',
+    textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+  },
+  subtitle: {
+    fontSize: '1.2rem',
+    opacity: '0.9',
+    maxWidth: '600px',
     margin: '0 auto',
+    fontWeight: '300',
+  },
+  filterSearchContainer: {
+    margin: '0 20px 40px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '24px',
+    flexWrap: 'wrap',
+    padding: '20px',
+    backgroundColor: 'white',
+    borderRadius: '16px',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+  },
+  filterGroup: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+  },
+  searchGroup: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  label: {
+    fontWeight: '600',
+    color: '#16a34a',
+    fontSize: '0.95rem',
+  },
+  dropdown: {
+    padding: '12px 16px',
+    borderRadius: '12px',
+    border: '2px solid #e2e8f0',
+    backgroundColor: '#fff',
+    color: '#2d3748',
+    fontSize: '0.95rem',
+    fontWeight: '500',
+    outline: 'none',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    minWidth: '140px',
+  },
+  searchBar: {
+    padding: '12px 20px',
+    borderRadius: '12px',
+    border: '2px solid #e2e8f0',
+    width: '280px',
+    fontSize: '0.95rem',
+    outline: 'none',
+    transition: 'all 0.3s ease',
+    backgroundColor: '#fff',
+  },
+  section: {
+    margin: '0 20px 60px',
+  },
+  sectionHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    marginBottom: '32px',
+    color: '#16a34a',
+    fontSize: '2.2rem',
+    fontWeight: '700',
+    borderBottom: '3px solid #22c55e',
+    paddingBottom: '12px',
+  },
+  sectionIcon: {
+    fontSize: '2rem',
+  },
+  cardContainer: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+    gap: '24px',
+  },
+  card: {
+    backgroundColor: '#ffffff',
+    padding: '24px',
+    borderRadius: '16px',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+    cursor: 'pointer',
+    border: '1px solid #f0f0f0',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  cardHover: {
+    transform: 'translateY(-8px)',
+    boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+    borderColor: '#22c55e',
+  },
+  cardTitle: {
+    color: '#16a34a',
+    marginBottom: '16px',
+    fontSize: '1.3rem',
+    fontWeight: '600',
+    lineHeight: '1.3',
+  },
+  cardText: {
+    fontSize: '1rem',
+    lineHeight: '1.7',
+    color: '#4a5568',
+    marginBottom: '16px',
+  },
+  cardFooter: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '0 2rem',
   },
-  logo: {
-    fontSize: '1.8rem',
-    fontWeight: 'bold',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
-  },
-  logoIcon: {
-    fontSize: '2rem',
-  },
-  menu: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '2rem',
-  },
-  navLink: {
-    color: 'white',
-    textDecoration: 'none',
-    transition: 'all 0.3s ease',
-    padding: '0.5rem 1rem',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  dropdownContainer: {
-    position: 'relative',
-  },
-  dropdownButton: {
-    background: 'transparent',
-    border: 'none',
-    color: 'white',
-    fontSize: '1rem',
-    cursor: 'pointer',
-    padding: '0.5rem 1rem',
-    borderRadius: '4px',
-    transition: 'background 0.3s ease',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.5rem',
-  },
-  arrow: {
-    fontSize: '0.8rem',
-    transition: 'transform 0.3s ease',
-  },
-  dropdownMenu: {
-    position: 'absolute',
-    top: '100%',
-    left: 0,
-    background: 'white',
-    borderRadius: '8px',
-    boxShadow: '0 8px 16px rgba(0,0,0,0.15)',
-    marginTop: '0.5rem',
-    overflow: 'hidden',
-    minWidth: '180px',
-  },
-  dropdownItem: {
-    display: 'block',
-    padding: '0.75rem 1.5rem',
-    color: '#333',
-    textDecoration: 'none',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    borderBottom: '1px solid #f0f0f0',
-  },
-  dropdownItemActive: {
-    background: 'linear-gradient(135deg, #4CAF50, #66BB6A)',
-    color: 'white',
-  },
-  searchContainer: {
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  searchInput: {
-    padding: '0.5rem 2.5rem 0.5rem 1rem',
-    borderRadius: '25px',
-    border: 'none',
-    width: '200px',
-    transition: 'width 0.3s ease',
+  cardAnimal: {
     fontSize: '0.9rem',
-  },
-  searchIcon: {
-    position: 'absolute',
-    right: '10px',
-    fontSize: '1rem',
-  },
-  main: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '2rem',
-  },
-  heroSection: {
-    textAlign: 'center',
-    padding: '3rem 0',
-    background: 'linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1))',
-    borderRadius: '15px',
-    marginBottom: '2rem',
-  },
-  heroTitle: {
-    fontSize: '3rem',
-    color: '#2E7D32',
-    marginBottom: '1rem',
-    fontWeight: 'bold',
-  },
-  heroSubtitle: {
-    fontSize: '1.2rem',
-    color: '#558B2F',
-  },
-  instructionSection: {
-    marginBottom: '3rem',
-  },
-  instructionCard: {
-    background: 'white',
-    padding: '3rem',
-    borderRadius: '15px',
-    boxShadow: '0 5px 15px rgba(0,0,0,0.08)',
-    textAlign: 'center',
-  },
-  instructionTitle: {
-    fontSize: '2rem',
-    color: '#2E7D32',
-    marginBottom: '1rem',
-  },
-  instructionText: {
-    fontSize: '1.1rem',
-    color: '#666',
-    marginBottom: '2rem',
-  },
-  featureGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gap: '2rem',
-    marginTop: '2rem',
-  },
-  featureCard: {
-    padding: '2rem',
-    background: 'linear-gradient(135deg, #f5f5f5, #fafafa)',
-    borderRadius: '10px',
-    transition: 'transform 0.3s ease',
-  },
-  featureIcon: {
-    fontSize: '3rem',
-    display: 'block',
-    marginBottom: '1rem',
-  },
-  animalSection: {
-    marginBottom: '3rem',
-  },
-  animalTitle: {
-    fontSize: '2.5rem',
-    color: '#2E7D32',
-    marginBottom: '2rem',
-    textAlign: 'center',
-  },
-  animalImage: {
-    width: '100%',
-    maxWidth: '800px',
-    height: '400px',
-    objectFit: 'cover',
-    borderRadius: '15px',
-    margin: '0 auto 3rem',
-    display: 'block',
-    boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
-  },
-  gridContainer: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: '2rem',
-  },
-  gridCard: {
-    background: 'white',
-    padding: '2rem',
-    borderRadius: '12px',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-    transition: 'all 0.3s ease',
-    cursor: 'pointer',
-    position: 'relative',
-    overflow: 'hidden',
-  },
-  cardIcon: {
-    fontSize: '2.5rem',
-    marginBottom: '1rem',
-    display: 'block',
-  },
-  cardTitle: {
-    fontSize: '1.3rem',
-    color: '#2E7D32',
-    marginBottom: '1rem',
     fontWeight: '600',
+    color: '#8b4513',
+    backgroundColor: '#fef5e7',
+    padding: '6px 12px',
+    borderRadius: '20px',
+    border: '1px solid #f6e05e',
   },
-  cardContent: {
-    color: '#555',
-    lineHeight: '1.6',
-    fontSize: '0.95rem',
-  },
-  successSection: {
-    marginTop: '4rem',
-    marginBottom: '2rem',
-  },
-  sectionTitle: {
-    fontSize: '2.5rem',
-    color: '#2E7D32',
-    marginBottom: '2rem',
+  noResults: {
     textAlign: 'center',
+    color: '#718096',
+    gridColumn: '1 / -1',
+    padding: '60px 20px',
+    backgroundColor: 'white',
+    borderRadius: '16px',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
   },
-  storiesContainer: {
+  noResultsIcon: {
+    fontSize: '4rem',
+    marginBottom: '16px',
+  },
+  clearButton: {
+    marginTop: '16px',
+    padding: '12px 24px',
+    backgroundColor: '#22c55e',
+    color: 'white',
+    border: 'none',
+    borderRadius: '8px',
+    fontSize: '0.95rem',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+  },
+  storyContainer: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
+    gap: '32px',
+  },
+  storyCard: {
+    backgroundColor: '#fff',
+    borderRadius: '20px',
+    boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+    overflow: 'hidden',
     display: 'flex',
     flexDirection: 'column',
-    gap: '1.5rem',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+    border: '1px solid #f0f0f0',
   },
-  successStory: {
-    background: 'white',
-    padding: '2rem',
-    borderRadius: '12px',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-    borderLeft: '4px solid #4CAF50',
-    transition: 'all 0.3s ease',
+  storyCardHover: {
+    transform: 'translateY(-12px)',
+    boxShadow: '0 24px 48px rgba(0,0,0,0.2)',
+  },
+  storyImageContainer: {
     position: 'relative',
-    paddingLeft: '4rem',
+    height: '220px',
+    overflow: 'hidden',
   },
-  storyIcon: {
+  storyImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    transition: 'transform 0.3s ease',
+  },
+  storyOverlay: {
     position: 'absolute',
-    left: '1.5rem',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    fontSize: '2rem',
+    top: '16px',
+    left: '16px',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    color: 'white',
+    padding: '8px 12px',
+    borderRadius: '20px',
+    fontSize: '0.85rem',
+    fontWeight: '500',
   },
-  storyTitle: {
-    fontSize: '1.4rem',
-    color: '#2E7D32',
-    marginBottom: '1rem',
-    fontWeight: '600',
+  storyLocation: {
+    color: 'white',
   },
   storyContent: {
-    color: '#555',
+    padding: '24px',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  storyTitle: {
+    margin: '0 0 16px 0',
+    color: '#16a34a',
+    fontSize: '1.4rem',
+    fontWeight: '700',
+    lineHeight: '1.3',
+  },
+  storySummary: {
+    fontSize: '1rem',
     lineHeight: '1.7',
+    color: '#4a5568',
+    marginBottom: '20px',
+    flex: 1,
   },
-  footer: {
-    background: 'linear-gradient(135deg, #4CAF50, #388E3C)',
-    color: 'white',
-    padding: '2rem 0',
-    marginTop: '4rem',
+  achievementBadge: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    backgroundColor: '#f0fff4',
+    border: '2px solid #9ae6b4',
+    borderRadius: '12px',
+    padding: '12px 16px',
+    marginBottom: '20px',
   },
-  footerContent: {
-    textAlign: 'center',
+  achievementIcon: {
+    fontSize: '1.2rem',
   },
-  footerTagline: {
-    marginTop: '0.5rem',
+  achievementText: {
+    fontWeight: '600',
+    color: '#2f855a',
+    fontSize: '0.95rem',
+  },
+  contactSection: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+    paddingTop: '20px',
+    borderTop: '1px solid #e2e8f0',
+  },
+  contactItem: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+  },
+  contactIcon: {
+    fontSize: '1rem',
+    width: '20px',
+  },
+  contactLink: {
+    color: '#22c55e',
+    textDecoration: 'none',
     fontSize: '0.9rem',
+    fontWeight: '500',
+    transition: 'color 0.3s ease',
+  },
+  ctaSection: {
+    textAlign: 'center',
+    padding: '60px 20px',
+    backgroundColor: '#16a34a',
+    color: 'white',
+    margin: '60px 20px 0',
+    borderRadius: '20px',
+  },
+  ctaTitle: {
+    fontSize: '2rem',
+    fontWeight: '700',
+    marginBottom: '16px',
+  },
+  ctaText: {
+    fontSize: '1.1rem',
+    marginBottom: '32px',
     opacity: '0.9',
+    maxWidth: '600px',
+    margin: '0 auto 32px',
+  },
+  ctaButton: {
+    display: 'inline-block',
+    backgroundColor: '#22c55e',
+    color: 'white',
+    textDecoration: 'none',
+    padding: '16px 32px',
+    fontSize: '1.1rem',
+    fontWeight: '600',
+    borderRadius: '12px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
   },
 };
 
-export default HealthTips;
+export default LivestockPage;
